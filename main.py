@@ -1,4 +1,4 @@
-import func_for_book_2 as book
+import func_for_book as book
 import func_for_db as db
 from pprint import pprint
 
