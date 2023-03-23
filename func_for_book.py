@@ -1,3 +1,6 @@
+import func_for_db as db
+
+
 def get_val_for_contacts(val_tabl_contacts=[]):
     """Возвращает значения для таблицы contacts"""
     surname = input("Фамилия (Для отмены нажми 0)--> ")
@@ -20,7 +23,7 @@ def get_val_for_contacts(val_tabl_contacts=[]):
     email = input("Email (Для отмены нажми 0)--> ")
     if email == "0":
         return email
-    while not is_valid_email(email):
+    while not db.is_valid_email(email):
         print("Такой email уже есть в телефонной книге.")
         email = input("Email (Для отмены нажми 0)--> ")
         if email == "0":
