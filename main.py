@@ -1,5 +1,6 @@
-import func_for_book as book
-import func_for_db as db
+import valid_funcs as valid
+import db_funcs as db
+import get_funcs as get
 from pprint import pprint
 
 
@@ -34,19 +35,19 @@ edit_menu = '''\nКакое поле контакта отредактирова
 
 def main():
     db.create_db()
-    flag = True
-    while flag:
-        main_response = book.get_response(main_menu)
+    show_main_menu = True
+    while show_main_menu:
+        main_response = get.get_response(main_menu)
         if main_response == "0":
             db.exit()
-            flag = False
+            show_main_menu = False
 
         elif main_response == "1":
-            val_tabl_contacts = book.get_val_for_contacts()
+            val_tabl_contacts = get.get_val_for_contacts()
             if val_tabl_contacts == "0":
                 print("\nКонтакт не добавлен.")
                 continue
-            val_tabl_numbers = book.get_val_for_numbers()
+            val_tabl_numbers = get.get_val_for_numbers()
             if val_tabl_numbers == "0":
                 print("\nКонтакт не добавлен.")
                 continue
@@ -69,22 +70,22 @@ def main():
                 print()
                 pprint(names_for_del)
                 print()
-            id_for_del = book.get_id_contact()
+            id_for_del = get.get_id_contact()
             if id_for_del == 0:
                 print("\nКонтакт не удален.")
                 continue
-            if not book.is_valid_id(id_for_del, names_for_del):
+            if not valid.is_valid_id(id_for_del, names_for_del):
                 print("\nID нет в списке. Контакт не удален.")
                 continue
             db.del_contact(id_for_del)
             print("\nКонтакт удален.")
 
         elif main_response == "4":
-            search_flag = True
-            while search_flag:
-                search_response = book.get_response(search_menu)
+            show_search_menu = True
+            while show_search_menu:
+                search_response = get.get_response(search_menu)
                 if search_response == "0":
-                    search_flag = False
+                    show_search_menu = False
 
                 elif search_response == "1":
                     found_surnames = db.search_by_surname()
@@ -174,76 +175,76 @@ def main():
                 print()
                 pprint(names_for_editing)
                 print()
-            id_for_edit = book.get_id_contact()
+            id_for_edit = get.get_id_contact()
             if id_for_edit == 0:
                 continue
-            if not book.is_valid_id(id_for_edit, names_for_editing):
+            if not valid.is_valid_id(id_for_edit, names_for_editing):
                 print("\nID нет в списке. Контакт не отредактирован.")
                 continue
-            edit_flag = True
-            while edit_flag:
-                edit_response = book.get_response(edit_menu)
+            show_edit_menu = True
+            while show_edit_menu:
+                edit_response = get.get_response(edit_menu)
                 if edit_response == "0":
-                    edit_flag = False
+                    show_edit_menu = False
                 
                 elif edit_response == "1":
-                    new_surname = book.get_new_surname()
+                    new_surname = get.get_new_surname()
                     if new_surname == "0":
                         continue
                     db.edit_surname(new_surname, id_for_edit) 
                     print("\nКонтакт отредактирован.")
                 
                 elif edit_response == "2":
-                    new_name = book.get_new_name()
-                    while not book.is_valid_name(new_name):
+                    new_name = get.get_new_name()
+                    while not valid.is_valid_name(new_name):
                         print("Это поля не может быть пустым.")
-                        new_name = book.get_new_name()
+                        new_name = get.get_new_name()
                     if new_name == "0":
                         continue
                     db.edit_name(new_name, id_for_edit)
                     print("\nКонтакт отредактирован.")
 
                 elif edit_response == "3":
-                    new_father_name = book.get_new_father_name()
+                    new_father_name = get.get_new_father_name()
                     if new_father_name == "0":
                         continue
                     db.edit_father_name(new_father_name, id_for_edit)
                     print("\nКонтакт отредактирован.")
 
                 elif edit_response == "4":
-                    new_email = book.get_new_email()
+                    new_email = get.get_new_email()
                     if db.the_same_email(new_email, id_for_edit):
                         print("\nКонтакт отредактирован.")
                         continue
-                    while not db.is_valid_email(new_email):
+                    while not valid.is_valid_email(new_email):
                         print("Такой email уже есть в телефонной книге.")
-                        new_email = book.get_new_email()
+                        new_email = get.get_new_email()
                     if new_email == "0":
                         continue
                     db.edit_email(new_email, id_for_edit)
                     print("\nКонтакт отредактирован.")
 
                 elif edit_response == "5":
-                    new_number = book.get_new_number()
+                    new_number = get.get_new_number()
                     if new_number == "0":
                         continue
-                    while not book.is_valid_number(new_number):
+                    while not valid.is_valid_number(new_number):
                         print("Формат номера должен быть +7... или 8...")
-                        new_number = book.get_new_number()
+                        new_number = get.get_new_number()
                         if new_number == "0":
                             break
                     db.edit_number(new_number, id_for_edit)
                     print("\nКонтакт отредактирован.")
 
                 elif edit_response == "6":
-                    new_home_number = book.get_new_home_number()
+                    new_home_number = get.get_new_home_number()
                     if new_home_number == "0":
                         continue
                     db.edit_home_number(new_home_number, id_for_edit)
                     print("\nКонтакт отредактирован.")
                 
                 elif edit_response == "7":
-                    new_work_number = book.get_new_work_number()
+                    new_work_number = get.get_new_work_number()
                     if new_work_number == "0":
                         continue
                     db.edit_work_number(new_work_number, id_for_edit)
