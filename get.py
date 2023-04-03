@@ -1,48 +1,16 @@
 import sqlite3 as sq
-import valid_funcs as valid
+import validation
 
 
-def get_db():
-    """Возвращает контакт к БД"""
-    connection_db = sq.connect("phone_book.db")
-    return connection_db
 
-def get_val_for_contacts(val_tabl_contacts=[]):
-    """Возвращает значения для таблицы contacts"""
-    surname = input("Фамилия (Для отмены нажми 0)--> ")
-    if surname == "0":
-        return surname
-    val_tabl_contacts.append(surname)
-    name = input("Имя (Для отмены нажми 0)--> ")
-    if name == "0":
-        return name
-    while not valid.is_valid_name(name):
-        print("Это поля не может быть пустым.")
-        name = input("Имя (Для отмены нажми 0)--> ")
-        if name == "0":
-            return name
-    val_tabl_contacts.append(name)
-    father_name = input("Отчество (Для отмены нажми 0)--> ")
-    if father_name == "0":
-        return father_name
-    val_tabl_contacts.append(father_name)
-    email = input("Email (Для отмены нажми 0)--> ")
-    if email == "0":
-        return email
-    while not valid.is_valid_email(email):
-        print("Такой email уже есть в телефонной книге.")
-        email = input("Email (Для отмены нажми 0)--> ")
-        if email == "0":
-            return email
-    val_tabl_contacts.append(email)
-    return val_tabl_contacts
 
-def get_val_for_numbers(val_tabl_numbers=[]):
+
+def get_val_num(val_tabl_numbers=[]):
     """Возвращает значения для таблицы numbers"""
     number = input("Номер (Для отмены нажми 0)--> ")
     if number == "0":
         return number
-    while not valid.is_valid_number(number):
+    while not validation.is_valid_number(number):
         print("Формат номера должен быть +7... или 8...")
         number = input("Номер (Для отмены нажми 0)--> ")
         if number == "0":

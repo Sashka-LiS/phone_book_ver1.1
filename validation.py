@@ -1,7 +1,7 @@
-import get_funcs as get
+import db
 
 
-def is_valid_email(email, phone_book=get.get_db()):
+def is_valid_email(email, phone_book=db.get_db()):
     """Проверка email на дубликат в БД"""
     cursor = phone_book.cursor()
     if email == None or email == '':
@@ -32,3 +32,4 @@ def is_valid_id(id, list_contacts):
             if type(value) == int:
                 list_id.append(value)
     return id in list_id
+
