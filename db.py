@@ -6,6 +6,8 @@ def get_db():
     connection_db = sq.connect("phone_book.db")
     return connection_db
 
+
+
 def create_db():
     """Создание БД"""
     with sq.connect('phone_book.db') as phone_book:
@@ -27,7 +29,7 @@ def create_db():
                     number TEXT,
                     type TEXT,
                     id_contact INTEGER,
-                    FOREIGN KEY (id_number) REFERENCES контакты (id_contact) ON DELETE CASCADE
+                    FOREIGN KEY (id_contact) REFERENCES contacts (id_contact) ON DELETE CASCADE
                 );
                 ''')
 
