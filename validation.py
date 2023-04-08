@@ -24,12 +24,4 @@ def is_valid_number(number):
         return False
     return True
 
-def is_valid_id(id, list_contacts):
-    '''Проверка на вхождение ID в список контактов для манипулиций'''
-    list_id = []
-    for contact in list_contacts:
-        for value in contact:
-            if type(value) == int:
-                list_id.append(value)
-    return id in list_id
 
