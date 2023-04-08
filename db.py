@@ -6,8 +6,6 @@ def get_db():
     connection_db = sq.connect("phone_book.db")
     return connection_db
 
-
-
 def create_db():
     """Создание БД"""
     with sq.connect('phone_book.db') as phone_book:
@@ -36,12 +34,8 @@ def create_db():
         cursor.executescript(query)
     return True
 
-def close_db(phone_book=get_db()):
-    """Закрывает контакт к БД"""
-    phone_book.close()
-    return True
-
-
+db_query = ["""SELECT id_contact, surname, name, father_name, email, numbers.number, numbers.type 
+               FROM contacts JOIN numbers ON contacts.id_contact = numbers.id_number WHERE name LIKE ?;"""]
 
 # def show_book(phone_book=get_db()):
 #     """Возвращает всю БД со всеми контактами"""
