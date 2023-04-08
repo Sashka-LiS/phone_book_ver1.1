@@ -3,10 +3,10 @@ import UI
 import contacts
 import validation
 import sys
-
+#Реализовать удаление контакта. Посмотреть старый вариант и сделать лучше.
 
 def get_val_for_contacts():
-    """Возвращает значения для таблицы contacts"""
+    """Возвращает объект с атрибутами для таблицы contacts"""
     surname = input("Surname (Press 0 to cancel)--> ")
     if surname == "0":
         return False
@@ -33,7 +33,7 @@ def get_val_for_contacts():
     return contact_rec
 
 def get_val_for_numbers(id_contact: int):
-    """Возвращает значения для таблицы numbers"""
+    """Возвращает объект с атрибутами для таблицы numbers"""
     number = input("Number (Press 0 to cancel)--> ")
     if number == "0":
         return False
@@ -49,19 +49,21 @@ def get_val_for_numbers(id_contact: int):
     return number_rec
 
 def add_additional_number(id_contact: int):
-        while True:
-            answer = input("Add another number to this contact?(Y/N)--> ").title()
-            if answer == "Y":
-                number_rec = get_val_for_numbers(id_contact)
-                contacts.add_number(number_rec)
-                print("\nThe number has been added.")
-            elif answer == "N":
-                print(f"\nContact added. Contact ID: {id_contact}")
-                break
-            else:
-                print("Try again(Y/N)--> ")
+    """Добавляет допномер для одного контакта"""
+    while True:
+        answer = input("Add another number to this contact?(Y/N)--> ").title()
+        if answer == "Y":
+            number_rec = get_val_for_numbers(id_contact)
+            contacts.add_number(number_rec)
+            print("\nThe number has been added.")
+        elif answer == "N":
+            print(f"\nContact added. Contact ID: {id_contact}")
+            break
+        else:
+            print("Try again(Y/N)--> ")
             
 def add_contact():
+
     print("\nAdding a new contact...")
     contact_rec = get_val_for_contacts()
     if not contact_rec:
@@ -74,13 +76,9 @@ def add_contact():
         return False
     contacts.add_number(number_rec)
     add_additional_number(id)
-    
-            
-
-    
-    
 
 def on_exit():
+    """Закрывает БД и выходит из программы"""
     db.close_db()
     print("\nHave a nice day!=)")
     sys.exit()
