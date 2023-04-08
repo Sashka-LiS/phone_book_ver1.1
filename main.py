@@ -4,8 +4,6 @@ import contacts
 import validation
 import sys
 
-#Реализовать бесконечное количество номеров для одного контакта
-
 
 def get_val_for_contacts():
     """Возвращает значения для таблицы contacts"""
@@ -50,6 +48,19 @@ def get_val_for_numbers(id_contact: int):
     number_rec = contacts.NumberRecord(number, type, id_contact)
     return number_rec
 
+def add_additional_number(id_contact: int):
+        while True:
+            answer = input("Add another number to this contact?(Y/N)--> ").title()
+            if answer == "Y":
+                number_rec = get_val_for_numbers(id_contact)
+                contacts.add_number(number_rec)
+                print("\nThe number has been added.")
+            elif answer == "N":
+                print(f"\nContact added. Contact ID: {id_contact}")
+                break
+            else:
+                print("Try again(Y/N)--> ")
+            
 def add_contact():
     print("\nAdding a new contact...")
     contact_rec = get_val_for_contacts()
@@ -59,10 +70,15 @@ def add_contact():
     id = contacts.add_contact(contact_rec)
     number_rec = get_val_for_numbers(id)
     if not number_rec:
-        print("Contact not added.")
+        print("Number not added.")
         return False
     contacts.add_number(number_rec)
-    print(f"\nContact added. Contact ID: {id}")
+    add_additional_number(id)
+    
+            
+
+    
+    
 
 def on_exit():
     db.close_db()
