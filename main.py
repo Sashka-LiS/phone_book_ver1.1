@@ -2,10 +2,9 @@ import db
 import UI
 import contacts
 import validation
+import sys
 
-# class Flag:
-#     def __init__(self, status: bool):
-#         self.status = status
+#Реализовать бесконечное количество номеров для одного контакта
 
 
 def get_val_for_contacts():
@@ -55,33 +54,33 @@ def add_contact():
     print("\nAdding a new contact...")
     contact_rec = get_val_for_contacts()
     if not contact_rec:
-        print("Contact not added.") # !!!!!!!!!!!
+        print("Contact not added.")
         return False
     id = contacts.add_contact(contact_rec)
     number_rec = get_val_for_numbers(id)
     if not number_rec:
-        print("Contact not added.") # !!!!!!!!!!!
+        print("Contact not added.")
         return False
     contacts.add_number(number_rec)
-    print(f"Contact added. Contact ID: {id}")
-
-def exit(flag=True):
-    return flag == False
+    print(f"\nContact added. Contact ID: {id}")
 
 def on_exit():
     db.close_db()
-
+    print("\nHave a nice day!=)")
+    sys.exit()
+    
+def del_contact():
+    pass
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
+             UI.Menuitem("Delete contact", del_contact),
              UI.Menuitem("Exit", on_exit)]
 
 def main():
     db.create_db()
-    print_menu_flag = True
-    while print_menu_flag:
+    while True:
         UI.print_menu("______MENU______", main_menu).handler()
-
-    
+        
     
 
 if __name__ == "__main__":
