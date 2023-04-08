@@ -14,6 +14,8 @@ class NumberRecord:
         self.id_contact = id_contact
 
 
+
+
 def add_contact(contact_rec: ContactRecord):
     """Добавляет в таблицу contacts"""
     phone_book = db.get_db()
