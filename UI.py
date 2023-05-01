@@ -1,7 +1,7 @@
 class Menuitem:
-    def __init__(self, title, handler):
+    def __init__(self, title, value):
         self.title = title
-        self.handler = handler
+        self.value = value
 
 
 def is_valid_response(response, menu):
@@ -10,7 +10,7 @@ def is_valid_response(response, menu):
     return True
 
 
-def print_menu(name_menu, menu):
+def print_menu(name_menu: str, menu: list[Menuitem])-> Menuitem:
     num_item = 0
     print()
     print(name_menu)
