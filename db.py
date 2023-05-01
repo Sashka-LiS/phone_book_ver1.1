@@ -34,8 +34,9 @@ def create_db():
         cursor.executescript(query)
     return True
 
-db_query = ["""SELECT id_contact, surname, name, father_name, email, numbers.number, numbers.type 
-               FROM contacts JOIN numbers ON contacts.id_contact = numbers.id_number WHERE name LIKE ?;"""]
+def close_db(phone_book=get_db()):
+    phone_book.close()
+
 
 # def show_book(phone_book=get_db()):
 #     """Возвращает всю БД со всеми контактами"""
@@ -209,10 +210,10 @@ db_query = ["""SELECT id_contact, surname, name, father_name, email, numbers.num
 #     return True
 
 # def edit_work_number(new_work_number, id_for_edit, phone_book=get_db()):
-    """Редактирует поле work_number в БД"""
-    values_for_edit = [new_work_number, id_for_edit]
-    cursor = phone_book.cursor()
-    cursor.execute("UPDATE numbers SET work_number = ? WHERE id_number = ?;", values_for_edit)
-    phone_book.commit()
-    cursor.close()
-    return True
+    # """Редактирует поле work_number в БД"""
+    # values_for_edit = [new_work_number, id_for_edit]
+    # cursor = phone_book.cursor()
+    # cursor.execute("UPDATE numbers SET work_number = ? WHERE id_number = ?;", values_for_edit)
+    # phone_book.commit()
+    # cursor.close()
+    # return True
