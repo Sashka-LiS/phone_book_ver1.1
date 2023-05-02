@@ -1,6 +1,7 @@
 import db
 import UI
 
+
 class ContactRecord:
     def __init__(self, id: int,surname: str, name: str, father_name: str, email: str):
         self.id = id
@@ -58,15 +59,29 @@ def find_contact(val_for_search: str)-> list[ContactRecord]:
         contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
     return contacts
 
-def show_book():
-    phone_book = db.get_db()
-    cursor = phone_book.cursor()
-    cursor.execute("""SELECT contacts.id_contact, contacts.surname, contacts.name, contacts.father_name,contacts.email, numbers.type, numbers.number
-                      FROM contacts, numbers
-                      WHERE contacts.id_contact = numbers.id_contact;""")
-    title = []
-    for contact in cursor.fetchall():
+# def show_book():
+#     phone_book = db.get_db()
+#     cursor = phone_book.cursor()
+#     cursor.execute("""SELECT contacts.id_contact, contacts.surname, contacts.name, contacts.father_name, contacts.email, numbers.type, numbers.number
+#                       FROM contacts, numbers
+#                       WHERE contacts.id_contact = numbers.id_contact;""")
+#     contacts = {}
+#     for contact in cursor.fetchall():
+#         contact = list(contact)
+#         key = contact[0]
+#         values = contact[1:]
+#         if key in contacts:
+#             contacts[key].extend(contacts[key])
+#         if contacts[key][0:3] == contacts[key][]
+#         else:
+#             contacts[key] = values
+            
+    print(contacts)
 
+                
+
+        
+    
 
 # def find_number()-> list[NumberRecord]:
 #     phone_book = db.get_db()
