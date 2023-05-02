@@ -111,7 +111,7 @@ def val_for_show_num()-> list[dict]:
     numbers = contacts.find_number()
     id_numbers = []
     for num in numbers:
-        id_numbers.append(UI.Menuitem(num.id_contact, [num.number, num.type]))
+        id_numbers.append(UI.Menuitem(num.id, [num.number, num.type]))
     return id_numbers
 
 def show_menu():
@@ -127,7 +127,7 @@ def show_menu():
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
-             UI.Menuitem("Show book", show_book),
+             UI.Menuitem("Show book", contacts.show_book),
              UI.Menuitem("Exit", on_exit)]
 
 def main():
