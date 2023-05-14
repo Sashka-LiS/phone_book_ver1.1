@@ -59,6 +59,8 @@ def find_contact(val_for_search: str)-> list[ContactRecord]:
         contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
     return contacts
 
+# МОЖНО ОТФИЛЬТРОВАТЬ ПОВЬОРЯЮЩИЕСЯ ЗНАЧЕНИЯ В СПИСКЕ FILTER
+
 # def show_book():
 #     phone_book = db.get_db()
 #     cursor = phone_book.cursor()
