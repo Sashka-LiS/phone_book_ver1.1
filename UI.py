@@ -3,14 +3,12 @@ class Menuitem:
         self.title = title
         self.value = value
 
-
 def is_valid_response(response, menu):
     if not response.isdigit() or int(response) <= 0 or int(response) > len(menu):
         return False
     return True
 
-
-def print_menu(name_menu: str, menu: list[Menuitem])-> Menuitem:
+def print_menu(name_menu: str, menu: list)-> Menuitem:
     num_item = 0
     print()
     print(name_menu)
@@ -21,4 +19,3 @@ def print_menu(name_menu: str, menu: list[Menuitem])-> Menuitem:
     while not is_valid_response(response, menu):
         response = (input("Select a menu item --> "))
     return menu[int(response)-1]
-
