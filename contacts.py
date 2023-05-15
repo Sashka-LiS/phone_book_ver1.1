@@ -1,5 +1,4 @@
 import db
-import UI
 
 
 class ContactRecord:
@@ -59,40 +58,22 @@ def find_contact(val_for_search: str)-> list[ContactRecord]:
         contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
     return contacts
 
-# МОЖНО ОТФИЛЬТРОВАТЬ ПОВЬОРЯЮЩИЕСЯ ЗНАЧЕНИЯ В СПИСКЕ FILTER
-
-# def show_book():
-#     phone_book = db.get_db()
-#     cursor = phone_book.cursor()
-#     cursor.execute("""SELECT contacts.id_contact, contacts.surname, contacts.name, contacts.father_name, contacts.email, numbers.type, numbers.number
-#                       FROM contacts, numbers
-#                       WHERE contacts.id_contact = numbers.id_contact;""")
-#     contacts = {}
-#     for contact in cursor.fetchall():
-#         contact = list(contact)
-#         key = contact[0]
-#         values = contact[1:]
-#         if key in contacts:
-#             contacts[key].extend(contacts[key])
-#         if contacts[key][0:3] == contacts[key][]
-#         else:
-#             contacts[key] = values
-            
-    print(contacts)
-
-                
+def show_book()-> list:
+    "Возвращает список со всеми контактами в книге"
+    phone_book = db.get_db()
+    cursor = phone_book.cursor()
+    contacts = cursor.execute("SELECT * FROM contacts")
+    list_tabl_contacts = []
+    for contact in cursor.fetchall():
+        list_tabl_contacts.append(contact)
+    for contact in list_tabl_contacts:
+        for id in contact:
+            print(id[0])
+    # Menuitem(title = "lis lis lis", value = id.lis) При выборе lis по id обращаюсь к БД и вывожу все телефоны с этим id
 
         
-    
 
-# def find_number()-> list[NumberRecord]:
-#     phone_book = db.get_db()
-#     cursor = phone_book.cursor()
-#     cursor.execute("SELECT number, type, id_contact FROM numbers;")
-#     numbers = []
-#     for num in cursor.fetchall():
-#         numbers.append(NumberRecord(num[0], num[1], num[2]))
-#     return numbers
+    
 
 
 
