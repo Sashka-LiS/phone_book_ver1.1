@@ -6,7 +6,6 @@ import sys
 from pprint import pprint
 
 
-
 def get_val_for_contacts():
     """Возвращает объект с атрибутами для таблицы contacts"""
     surname = input("Surname (Press 0 to cancel)--> ")
@@ -51,7 +50,7 @@ def get_val_for_numbers(id_contact: int):
     return number_rec
           
 def add_contact():
-
+    """Добавляет запись в БД"""
     print("\nAdding a new contact...")
     contact_rec = get_val_for_contacts()
     if not contact_rec:
@@ -66,9 +65,7 @@ def add_contact():
     response = None
     while response != "N":
         response = input("Add another number for this contact?(Y/N) --> ").title()
-        if response == "N":
-            print("\nThe contact is saved in the phone book.") 
-        elif response == "Y":
+        if response == "Y":
             number_rec = get_val_for_numbers(id)
             if not number_rec:
                 print("Number not added.")
@@ -76,6 +73,7 @@ def add_contact():
             contacts.add_number(number_rec)
         else:
             response = input("\nAdd another number for this contact?(Y/N) --> ").title()
+    print("\nThe contact is saved in the phone book.") 
     return True
 
 def on_exit():
@@ -98,36 +96,15 @@ def del_contact():
     if selected.value == None:
         return None
     contacts.del_contact(selected.value.id)
+    print()
     print(f"Contact {selected.value.name} deleted.")
 
-def val_for_show_cont()-> list[dict]:
-    cont = contacts.find_contact(val_for_search="")
-    id_contact = []
-    for contact in cont:
-        id_contact.append(UI.Menuitem(contact.id, [contact.surname, contact.name, contact.father_name, contact.email]))
-    return id_contact
-
-def val_for_show_num()-> list[dict]:
-    numbers = contacts.find_number()
-    id_numbers = []
-    for num in numbers:
-        id_numbers.append(UI.Menuitem(num.id, [num.number, num.type]))
-    return id_numbers
-
-def show_menu():
-    menu = []
-    contacts = val_for_show_cont()
-    numbers = val_for_show_num()
-    for contact in contacts:
-        menu.append(UI.Menuitem(contact.title, contact.value))
-    for num in numbers:
-        menu.append(UI.Menuitem(num.title, num.value))
-    return menu
-    
+def show_book():
+    cont = contacts.show_book()
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
-             UI.Menuitem("Show book", contacts.show_book),
+             UI.Menuitem("Show book", show_book),
              UI.Menuitem("Exit", on_exit)]
 
 def main():
