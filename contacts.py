@@ -55,28 +55,10 @@ def find_contact(name=None)-> list[ContactRecord]:
     if name == None:
         cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts;")
         for contact in cursor.fetchall():
-            contacts.append(UI.Menuitem(f"{contact[1]} {contact[2]} {contact[3]} {contact[4]}", contact[0]))
-        return contacts
-    name = ["%" + name + "%"]
-    cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts WHERE name LIKE ?;", name)
+            contacts.append(UI.Menuitem(f"{contact[0]} {contact[1]} {contact[2]} {contact[3]} {contact[4]}", None))
+    else:
+        name = ["%" + name + "%"] 
+        cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts WHERE name LIKE ?;", name)
     for contact in cursor.fetchall():
         contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
     return contacts
-
-# def show_book()-> list:
-#     "Возвращает список со всеми контактами из таблицы contacts"
-#     phone_book = db.get_db()
-#     cursor = phone_book.cursor()
-#     contacts = cursor.execute("SELECT * FROM contacts")
-#     list_tabl_contacts = []
-#     for contact in cursor.fetchall():
-#         list_tabl_contacts.append(contact)
-#     return list_tabl_contacts
-    # Menuitem(title = "lis lis lis", value = id.lis) При выборе lis по id обращаюсь к БД и вывожу все телефоны с этим id
-
-        
-
-    
-
-
-
