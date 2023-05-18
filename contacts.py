@@ -55,7 +55,7 @@ def find_contact(name=None)-> list[ContactRecord]:
     if name == None:
         cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts;")
         for contact in cursor.fetchall():
-            contacts.append(UI.Menuitem(f"{contact[0]} {contact[1]} {contact[2]} {contact[3]} {contact[4]}", None))
+            contacts.append(UI.Menuitem(f"ID={contact[0]} {contact[1]} {contact[2]} {contact[3]} {contact[4]}", None))
     else:
         name = ["%" + name + "%"] 
         cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts WHERE name LIKE ?;", name)
