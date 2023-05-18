@@ -100,8 +100,11 @@ def del_contact():
     print(f"Contact {selected.value.name} deleted.")
 
 def show_book():
-    contacts_menu = contacts.find_contact()
-    UI.print_menu("_____ALL CONTACTS_____", contacts_menu)
+    all_cont_menu = contacts.find_contact()
+    UI.print_menu("_____ALL CONTACTS_____", all_cont_menu)
+    for cont in all_cont_menu:
+        print(cont)
+    
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
