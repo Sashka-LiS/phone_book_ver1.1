@@ -15,7 +15,7 @@ def print_menu(name_menu: str, menu: list)-> Menuitem:
     for item in menu:
         num_item += 1
         print(f"{num_item} - {item.title}")
-    response = (input("Select a menu item --> "))
+    response = (input("\nSelect a menu item --> "))
     while not is_valid_response(response, menu):
-        response = (input("Select a menu item --> "))
+        response = (input("\nSelect a menu item --> "))
     return menu[int(response)-1]
