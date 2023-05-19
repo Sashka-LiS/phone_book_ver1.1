@@ -61,9 +61,11 @@ def find_contact(name=None)-> list[ContactRecord]:
         contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
     return contacts
 
-def show_book(id):
+def show_book(id: int)-> list:
     phone_book = db.get_db()
     cursor = phone_book.cursor()
     cursor.execute("SELECT * FROM numbers WHERE id_number = ?;", [id])
+    numbers = []
     for number in cursor.fetchall():
-        print(number)
+        numbers.append(number)
+    return numbers # Почему сюда попадает одна запись?
