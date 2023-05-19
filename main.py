@@ -100,9 +100,15 @@ def del_contact():
     print(f"Contact {selected.value.name} deleted.")
 
 def show_book():
-    all_cont_menu = contacts.find_contact()
-    UI.print_menu("_____ALL CONTACTS_____", all_cont_menu)
-    
+    all_contacts = contacts.find_contact()
+    show_book_menu = []
+    for contact in all_contacts:
+        show_book_menu.append(UI.Menuitem(f"{contact.surname} {contact.name} {contact.father_name} {contact.email}", contact))
+    show_book_menu.append(UI.Menuitem("Cancel", None))
+    selected = UI.print_menu("_____ALL CONTACTS_____", show_book_menu)
+    if selected.value == None:
+        return None
+    contacts.show_book(selected.value.id)    
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
