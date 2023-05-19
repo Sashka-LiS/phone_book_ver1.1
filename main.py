@@ -108,7 +108,7 @@ def show_book():
     selected = UI.print_menu("_____ALL CONTACTS_____", show_book_menu)
     if selected.value == None:
         return None
-    contacts.show_book(selected.value.id)    
+    pprint(contacts.show_book(selected.value.id))    
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
