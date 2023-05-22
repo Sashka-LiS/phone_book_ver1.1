@@ -64,8 +64,8 @@ def find_contact(name=None)-> list[ContactRecord]:
 def show_book(id: int)-> list:
     phone_book = db.get_db()
     cursor = phone_book.cursor()
-    cursor.execute("SELECT * FROM numbers WHERE id_number = ?;", [id])
+    cursor.execute("SELECT * FROM numbers WHERE id_contact = ?;", [id])
     numbers = []
     for number in cursor.fetchall():
-        numbers.append(number)
-    return numbers # Почему сюда попадает одна запись?
+        numbers.append(ContactRecord(None, number[1], number[2], None, None))
+    return numbers 
