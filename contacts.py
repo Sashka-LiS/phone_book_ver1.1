@@ -48,24 +48,41 @@ def del_contact(id: int):
     cursor.close()
     return True
 
-def find_contact(name=None)-> list[ContactRecord]:
+def xz_kakoe_nazvanie(query, value: str)-> list:
     phone_book = db.get_db()
     cursor = phone_book.cursor()
-    contacts = []
-    if name == None:
-        cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts;")
+    list_contacts = []
+    if value == None:
+        cursor.execute(query)
     else:
-        name = ["%" + name + "%"] 
-        cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts WHERE name LIKE ?;", name)
+        cursor.execute(query, value)
     for contact in cursor.fetchall():
-        contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
+        list_contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
+    return list_contacts
+
+def find_contact(value=None)-> list[ContactRecord]:
+    contacts = []
+    if value == None:
+        all_contacts = ("SELECT id_contact, surname, name, father_name, email FROM contacts;")
+        contacts += xz_kakoe_nazvanie(all_contacts, value)        
+        return contacts
+    else:
+        value = ["%" + value + "%"]
+        find_surname = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE surname LIKE ?;"
+        contacts += xz_kakoe_nazvanie(find_surname, value)
+        find_name = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE name LIKE ?;"
+        contacts += xz_kakoe_nazvanie(find_name, value)
+        find_father_name = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE father_name LIKE ?;"
+        contacts += xz_kakoe_nazvanie(find_father_name, value)
+        find_email = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE email LIKE ?;"
+        contacts += xz_kakoe_nazvanie(find_email, value)
     return contacts
 
-def show_book(id: int)-> list:
+def show_number_cont(id: int)-> list:
     phone_book = db.get_db()
     cursor = phone_book.cursor()
     cursor.execute("SELECT * FROM numbers WHERE id_contact = ?;", [id])
     numbers = []
     for number in cursor.fetchall():
-        numbers.append(ContactRecord(None, number[1], number[2], None, None))
+        numbers.append(ContactRecord(None, number[1], number[2], None, None)) # использовал объект ContactRecord для отображения number и type
     return numbers 
