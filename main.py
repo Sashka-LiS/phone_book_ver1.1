@@ -109,13 +109,21 @@ def show_book():
     if selected.value == None:
         return None
     print()
-    for number in contacts.show_book(selected.value.id):
+    for number in contacts.show_number_cont(selected.value.id):
         print(f"{number.surname} {number.name}")
+
+def find_contact():
+    value = input("--> ")
+    found_contacts = contacts.find_contact(value)
+    print()
+    for contact in found_contacts:
+        print(f"{contact.surname} {contact.name} {contact.father_name} {contact.email}")
 
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
              UI.Menuitem("Show book", show_book),
+             UI.Menuitem("Find contact", find_contact),
              UI.Menuitem("Exit", on_exit)]
 
 def main():
