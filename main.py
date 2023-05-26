@@ -3,7 +3,6 @@ import UI
 import contacts
 import validation
 import sys
-from pprint import pprint
 
 
 def get_val_for_contacts():
@@ -99,13 +98,16 @@ def del_contact():
     print()
     print(f"Contact {selected.value.name} deleted.")
 
-def show_book():
-    all_contacts = contacts.find_contact()
+def show_book(value=None):
+    if value == None:
+        all_contacts = contacts.find_contact()
+    else:
+        all_contacts = contacts.find_contact(value)
     show_book_menu = []
     for cont in all_contacts:
         show_book_menu.append(UI.Menuitem(f"{cont.surname} {cont.name} {cont.father_name} {cont.email}", cont))
     show_book_menu.append(UI.Menuitem("Cancel", None))
-    selected = UI.print_menu("_____ALL CONTACTS_____", show_book_menu)
+    selected = UI.print_menu("_____CONTACTS_____", show_book_menu)
     if selected.value == None:
         return None
     print()
@@ -113,11 +115,10 @@ def show_book():
         print(f"{number.surname} {number.name}")
 
 def find_contact():
-    value = input("--> ")
-    found_contacts = contacts.find_contact(value)
-    print()
-    for contact in found_contacts:
-        print(f"{contact.surname} {contact.name} {contact.father_name} {contact.email}")
+    value = input("Search data (Press 0 to cancel)--> ")
+    if value == "0":
+        return False
+    show_book(value)
 
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
