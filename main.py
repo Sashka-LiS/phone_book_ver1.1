@@ -3,6 +3,7 @@ import UI
 import contacts
 import validation
 import sys
+import numbers
 
 
 def get_val_for_contacts():
@@ -45,7 +46,7 @@ def get_val_for_numbers(id_contact: int):
     type = input("Type for number (Press 0 to cancel)--> ")
     if type == "0":
         return False
-    number_rec = contacts.NumberRecord(number, type, id_contact)
+    number_rec = numbers.NumberRecord(number, type, id_contact)
     return number_rec
           
 def add_contact():
@@ -60,7 +61,7 @@ def add_contact():
     if not number_rec:
         print("Number not added.")
         return False
-    contacts.add_number(number_rec)
+    numbers.add_number(number_rec)
     response = None
     while response != "N":
         response = input("Add another number for this contact?(Y/N) --> ").title()
@@ -69,9 +70,7 @@ def add_contact():
             if not number_rec:
                 print("Number not added.")
                 return False
-            contacts.add_number(number_rec)
-        else:
-            response = input("\nAdd another number for this contact?(Y/N) --> ").title()
+            numbers.add_number(number_rec)
     print("\nThe contact is saved in the phone book.") 
     return True
 
@@ -119,11 +118,10 @@ def show_numbers_menu(id_contact: int)-> int:
     if id_contact == None:
         return None
     numbers_menu = []
-    for number in contacts.find_numbers(id_contact):
+    for number in numbers.find_numbers(id_contact):
         numbers_menu.append(UI.Menuitem(f"{number[1]} {number[2]}", number[0]))
     numbers_menu.append(UI.Menuitem("Cancel", None))
     id_number = UI.print_menu("_____NUMBERS_____", numbers_menu).value
-    print(id_number)
     return id_number
     
 def show_menu():
