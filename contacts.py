@@ -48,34 +48,20 @@ def del_contact(id: int):
     cursor.close()
     return True
 
-def xz_kakoe_nazvanie(query, value: str)-> list:
+def find_contact(value=None)-> list[ContactRecord]:
     phone_book = db.get_db()
     cursor = phone_book.cursor()
-    list_contacts = []
-    if value == None:
-        cursor.execute(query)
-    else:
-        cursor.execute(query, value)
-    for contact in cursor.fetchall():
-        list_contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
-    return list_contacts
-
-def find_contact(value=None)-> list[ContactRecord]:
     contacts = []
     if value == None:
-        all_contacts = ("SELECT id_contact, surname, name, father_name, email FROM contacts;")
-        contacts += xz_kakoe_nazvanie(all_contacts, value)        
-        return contacts
+        cursor.execute("SELECT id_contact, surname, name, father_name, email FROM contacts;")        
     else:
-        value = ["%" + value + "%"]
-        find_surname = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE surname LIKE ?;"
-        contacts += xz_kakoe_nazvanie(find_surname, value)
-        find_name = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE name LIKE ?;"
-        contacts += xz_kakoe_nazvanie(find_name, value)
-        find_father_name = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE father_name LIKE ?;"
-        contacts += xz_kakoe_nazvanie(find_father_name, value)
-        find_email = "SELECT id_contact, surname, name, father_name, email FROM contacts WHERE email LIKE ?;"
-        contacts += xz_kakoe_nazvanie(find_email, value)
+        value = "%" + value + "%"
+        cursor.execute("""SELECT id_contact, surname, name, father_name, email FROM contacts WHERE surname LIKE ?
+                          OR name LIKE ?
+                          OR father_name LIKE ?
+                          OR email LIKE ?;""", [value, value, value, value])
+    for contact in cursor.fetchall():
+        contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
     return contacts
 
 def show_number_cont(id: int)-> list:
