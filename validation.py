@@ -23,5 +23,3 @@ def is_valid_number(number):
     if number[0:2] != '+7' and number[0] != '8':
         return False
     return True
-
-
