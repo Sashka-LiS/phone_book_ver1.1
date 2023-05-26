@@ -98,33 +98,57 @@ def del_contact():
     print()
     print(f"Contact {selected.value.name} deleted.")
 
-def show_book(value=None):
+def show_names_menu(value=None):
+    """выводит меню с именами контактов"""
     if value == None:
         all_contacts = contacts.find_contact()
     else:
         all_contacts = contacts.find_contact(value)
-    show_book_menu = []
-    for cont in all_contacts:
-        show_book_menu.append(UI.Menuitem(f"{cont.surname} {cont.name} {cont.father_name} {cont.email}", cont))
-    show_book_menu.append(UI.Menuitem("Cancel", None))
-    selected = UI.print_menu("_____CONTACTS_____", show_book_menu)
-    if selected.value == None:
+    if not all_contacts:
+        print("\nContact not found.")
         return None
-    print()
-    for number in contacts.show_number_cont(selected.value.id):
-        print(f"{number.surname} {number.name}")
+    names_menu = []
+    for cont in all_contacts:
+        names_menu.append(UI.Menuitem(f"{cont.surname} {cont.name} {cont.father_name} {cont.email}", cont))
+    names_menu.append(UI.Menuitem("Cancel", None))
+    id = UI.print_menu("_____CONTACTS_____", names_menu).value.id
+    return id
+
+def show_numbers_menu():
+    """выводит меню с телефонами контакта"""
+    id = show_names_menu()
+    if id == None:
+        return None
+    numbers_menu = []
+    for number in contacts.get_val_numbers_menu(id):
+        numbers_menu.append(UI.Menuitem(f"{number[1]} {number[2]}", True))
+    numbers_menu.append(UI.Menuitem("Cancel", None))
+    UI.print_menu("_____NUMBERS_____", numbers_menu)
+    # id = UI.print_menu("_____CONTACTS_____", names_menu)
+    # 
+    # val_numbers_menu = contacts.get_val_numbers_menu(id.value.id)
+    # numbers_menu = []
+    # for number in val_numbers_menu:
+    #     numbers_menu.append(UI.Menuitem(f"{number[1]} {number[2]}", None))
+    # numbers_menu.append(UI.Menuitem("Cancel", None))
+    # UI.print_menu("_____NUMBERS_____", numbers_menu)
+    
 
 def find_contact():
     value = input("Search data (Press 0 to cancel)--> ")
     if value == "0":
         return False
-    show_book(value)
+    # show_book(value)
+
+def update_contact():
+    find_contact()
 
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
-             UI.Menuitem("Show book", show_book),
+             UI.Menuitem("Show contacts", show_numbers_menu),
              UI.Menuitem("Find contact", find_contact),
+             UI.Menuitem("Update contact", update_contact),
              UI.Menuitem("Exit", on_exit)]
 
 def main():
