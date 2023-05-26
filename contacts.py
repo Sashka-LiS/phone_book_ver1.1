@@ -64,11 +64,12 @@ def find_contact(value=None)-> list[ContactRecord]:
         contacts.append(ContactRecord(contact[0], contact[1], contact[2], contact[3], contact[4]))
     return contacts
 
-def show_number_cont(id: int)-> list:
+def get_val_numbers_menu(id: int)-> list:
     phone_book = db.get_db()
     cursor = phone_book.cursor()
     cursor.execute("SELECT * FROM numbers WHERE id_contact = ?;", [id])
     numbers = []
     for number in cursor.fetchall():
-        numbers.append(ContactRecord(None, number[1], number[2], None, None)) # использовал объект ContactRecord для отображения number и type
-    return numbers 
+        numbers.append(number)
+    return numbers
+
