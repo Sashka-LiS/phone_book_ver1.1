@@ -46,7 +46,7 @@ def get_val_for_numbers(id_contact: int):
     type = input("Type for number (Press 0 to cancel)--> ")
     if type == "0":
         return False
-    number_rec = numbers.NumberRecord(number, type, id_contact)
+    number_rec = numbers.NumberRecord(None, number, type, id_contact)
     return number_rec
           
 def add_contact():
@@ -97,40 +97,37 @@ def del_contact():
     print()
     print(f"Contact {selected.value.name} deleted.")
 
-def show_names_menu(value=None)-> int:
-    """выводит меню с именами контактов"""
-    if value == None:
-        all_contacts = contacts.find_contact()
-    else:
-        all_contacts = contacts.find_contact(value)
-    if not all_contacts:
-        print("\nContact not found.")
+def contact_number_actions(id_number):
+    action_menu = [UI.Menuitem("Delete number", lambda: print("DELETED NUMBER")),
+                   UI.Menuitem("Cancel", None)]
+    action = UI.print_menu("_____ACTION FOR NUMBER_____", action_menu).value
+    if action == None:
         return None
-    names_menu = []
-    for cont in all_contacts:
-        names_menu.append(UI.Menuitem(f"{cont.surname} {cont.name} {cont.father_name} {cont.email}", cont))
-    names_menu.append(UI.Menuitem("Cancel", None))
-    id_contact = UI.print_menu("_____CONTACTS_____", names_menu).value.id
-    return id_contact
+    action()
 
-def show_numbers_menu(id_contact: int)-> int:
-    """выводит меню с телефонами контакта"""
-    if id_contact == None:
-        return None
-    numbers_menu = []
-    for number in numbers.find_numbers(id_contact):
-        numbers_menu.append(UI.Menuitem(f"{number[1]} {number[2]}", number[0]))
-    numbers_menu.append(UI.Menuitem("Cancel", None))
-    id_number = UI.print_menu("_____NUMBERS_____", numbers_menu).value
-    return id_number
+def contact_number_list(id_contact:int):
+    numb = numbers.find_numbers(id_contact)
+    id_number = numbers.choice_number_menu("_____NUMBERS_____", numb)
+    contact_number_actions(id_number)
+
+def choice_contact_menu(title: str, items: list[contacts.ContactRecord])-> int:
+    menu_items = []
+    for contact in items:
+        menu_items.append(UI.Menuitem(f"{contact.surname} {contact.name} {contact.father_name} {contact.email}", contact))
+    menu_items.append(UI.Menuitem("Cancel", None))
+    choice = UI.print_menu(title, menu_items).value
+    return choice
     
-def show_menu():
-    id_contact = show_names_menu()
-    id_number = show_numbers_menu(id_contact)
+def show_contact_menu():
+    cont = contacts.find_contact(value=None)
+    choice = choice_contact_menu("_____CONTACTS_____", cont)
+    if choice == None:
+        return None
+    contact_number_list(choice.id)
 
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
-             UI.Menuitem("Show contacts", show_menu),
+             UI.Menuitem("Show contacts", show_contact_menu),
              UI.Menuitem("Exit", on_exit)]
 
 def main():
@@ -142,3 +139,40 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# def show_contacts_menu(value=None)-> int:
+#     """выводит меню с именами контактов"""
+#     if value == None:
+#         all_contacts = contacts.find_contact()
+#     else:
+#         all_contacts = contacts.find_contact(value)
+#     if not all_contacts:
+#         print("\nContact not found.")
+#         return None
+#     names_menu = []
+#     for cont in all_contacts:
+#         names_menu.append(UI.Menuitem(f"{cont.surname} {cont.name} {cont.father_name} {cont.email}", cont))
+#     names_menu.append(UI.Menuitem("Cancel", None))
+#     id_contact = UI.print_menu("_____CONTACTS_____", names_menu).value.id
+#     return id_contact
+
+# def show_numbers_menu(id_contact: int)-> int:
+#     """выводит меню с телефонами контакта"""
+#     if id_contact == None:
+#         return None
+#     numbers_menu = []
+#     for number in numbers.find_numbers(id_contact):
+#         numbers_menu.append(UI.Menuitem(f"{number[1]} {number[2]}", number[0]))
+#     numbers_menu.append(UI.Menuitem("Cancel", None))
+#     id_number = UI.print_menu("_____NUMBERS_____", numbers_menu).value
+#     return id_number
+
+# def del_number():
+#     id_number = show_numbers_menu()
+
+
+# def show_find_cont():
+#     id_contact = show_contacts_menu()
+#     id_number = show_numbers_menu(id_contact)
+#     action_menu = [UI.Menuitem("Delete number", del_number)]
+#     UI.print_menu("_____ACTION CHOICE_____", action_menu)
