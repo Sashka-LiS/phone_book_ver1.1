@@ -1,8 +1,9 @@
 import db
-
+import UI
 
 class NumberRecord:
-    def __init__(self, number: str, type: str, id_contact: int):
+    def __init__(self, id: int, number: str, type: str, id_contact: int):
+        self.id = id
         self.number = number
         self.type = type
         self.id_contact = id_contact
@@ -27,3 +28,20 @@ def find_numbers(id: int)-> list:
     for number in cursor.fetchall():
         numbers.append(number)
     return numbers
+
+def del_number(id_number: int):
+    phone_book = db.get_db()
+    cursor = phone_book.cursor()
+    cursor.execute("DELETE from numbers WHERE id_number = ?;", [id_number])
+    phone_book.commit()
+    cursor.close()
+    return True
+
+def number_to_menu_item(number: NumberRecord)-> UI.Menuitem:
+    return UI.Menuitem(f"{number.number} {number.type}", number)
+
+def choice_number_menu(title: str, items: list[NumberRecord]):
+    menu_items = []
+    for number in items:
+        menu_items.append(number_to_menu_item(number))
+    return UI.print_menu(title, menu_items).value.id
