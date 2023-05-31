@@ -20,13 +20,13 @@ def add_number(number_rec: NumberRecord):
     cursor.close()
     return id
 
-def find_numbers(id: int)-> list:
+def find_numbers(id: int)-> list[NumberRecord]:
     phone_book = db.get_db()
     cursor = phone_book.cursor()
     cursor.execute("SELECT * FROM numbers WHERE id_contact = ?;", [id])
     numbers = []
     for number in cursor.fetchall():
-        numbers.append(number)
+        numbers.append(NumberRecord(number[0], number[1], number[2], number[3]))
     return numbers
 
 def del_number(id_number: int):
@@ -37,11 +37,11 @@ def del_number(id_number: int):
     cursor.close()
     return True
 
-def number_to_menu_item(number: NumberRecord)-> UI.Menuitem:
-    return UI.Menuitem(f"{number.number} {number.type}", number)
-
-def choice_number_menu(title: str, items: list[NumberRecord]):
-    menu_items = []
-    for number in items:
-        menu_items.append(number_to_menu_item(number))
-    return UI.print_menu(title, menu_items).value.id
+def update_number(id_number: int, new_number: str, new_type: str):
+    phone_book = db.get_db()
+    cursor = phone_book.cursor()
+    cursor.execute("""UPDATE numbers
+                      SET number = ?, type = ?
+                      WHERE id_number = ?;""", [new_number, new_type, id_number])
+    phone_book.commit()
+    cursor.close()
