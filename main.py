@@ -102,20 +102,10 @@ def del_number(id_number):
     print(f"Number {id_number} deleted.")
 
 def update_number(id_number):
-    get_val_for_numbers
-    # new_number = input("\nNew number(Press 0 to cancel)--> ")
-    # if new_number == "0":
-    #     return None
-    # while not validation.is_valid_number(new_number):
-    #     print("Phone number format should be +7... or 8...")
-    #     number = input("Number (Press 0 to cancel)--> ")
-    #     if number == "0":
-    #         return False
-    # new_type = input("New type(Press 0 to cancel)--> ")
-    # if new_type == "0":
-    #     return None
-    numbers.update_number(id_number, new_number, new_type)
+    number_rec = get_val_for_numbers(None)
+    numbers.update_number(id_number, number_rec.number, number_rec.type)
     print(f"Number {id_number} updated")
+    return True
 
 def show_contact_menu(value=None):
     cont = contacts.find_contact(value)
@@ -157,9 +147,12 @@ def contact_number_actions(id_number):
     action()
 
 def find_contact():
-    value = input("Contact details to search --> ")
+    value = input("\nContact details to search (Press 0 to cancel) --> ")
+    if value == "0":
+        return None
     show_contact_menu(value)
-    
+   
+
 main_menu = [UI.Menuitem("Add new contact", add_contact),
              UI.Menuitem("Delete contact", del_contact),
              UI.Menuitem("Show all contacts", show_contact_menu),
